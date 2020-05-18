@@ -1,0 +1,62 @@
+<template>
+  <div class="case-element">
+      <the-page-heading>
+        <span>CASE №</span> {{caseData._id}}
+      </the-page-heading>
+      <p class="">{{caseData}}</p>
+    </div>
+</template>
+
+<script>
+
+import ThePageHeading from './ThePageHeading'
+
+export default {
+    name: "CasesContainerFullItem",
+    components: {
+        ThePageHeading
+      },
+    props: {
+        caseData: {
+          type: Object
+        }
+    }
+}
+</script>
+
+<style>
+.case-element {
+    padding: 100px 0;
+}
+.case-element-header {
+    font-size: 3em;
+    color: #2E1114;
+    padding: 25px 0;
+    background-color: #f8e9a1;
+}
+.case-element-btn-edit, .case-element-btn-save {
+    background-color: #3b945e;
+    color: #2E1114;
+}
+.case-element-btn-edit:hover, 
+.case-element-btn-edit:focus,
+.case-element-btn-edit:active,
+.case-element-btn-save:hover,
+.case-element-btn-save:focus,
+.case-element-btn-save:active  {
+    background-color: #3b945e !important;
+    color: #2E1114 !important;
+    box-shadow: none;
+}
+.case-element-btn-delete {
+    background-color: #f76c6c;
+    color: #2E1114;
+}
+.case-element-btn-delete:hover,
+.case-element-btn-delete:focus,
+.case-element-btn-delete:active {
+    background-color: #f76c6c !important;
+    color: #2E1114 !important;
+    box-shadow: none;
+}
+</style>
