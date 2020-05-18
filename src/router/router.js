@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import CasesContainer from '../components/CasesContainer'
-import CasesContainerFullItem from '../components/CasesContainerFullItem'
+import CasesContainer from '../components/Cases/CasesContainer'
+import CasesContainerFullItem from '../components/Cases/CasesContainerFullItem'
 
 Vue.use(Router)
 

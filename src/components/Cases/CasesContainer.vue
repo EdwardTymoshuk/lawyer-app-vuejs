@@ -18,7 +18,7 @@
 
 <script>
 
-import ThePageHeading from './ThePageHeading'
+import ThePageHeading from '../ThePageHeading'
 import CasesContainerReducedItem from './CasesContainerReducedItem'
 import {mapActions, mapGetters} from 'vuex'
 

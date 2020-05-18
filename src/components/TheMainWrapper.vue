@@ -10,7 +10,7 @@
 <script>
 
 import HeaderContainer from './HeaderContainer'
-import CasesContainer from './CasesContainer'
+import CasesContainer from './Cases/CasesContainer'
 
 export default {
     name: "TheMainWrapper",

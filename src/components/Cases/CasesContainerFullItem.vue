@@ -9,7 +9,7 @@
 
 <script>
 
-import ThePageHeading from './ThePageHeading'
+import ThePageHeading from '../ThePageHeading'
 
 export default {
     name: "CasesContainerFullItem",

@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import actions from './actions/actions'
 import mutations from './mutations/mutations'
 import getters from './getters/getters'
+import commonActions from './actions/actions'
+import api from './actions/api'
+
+const actions = {...commonActions, ...api}
 
 Vue.use(Vuex)
 
