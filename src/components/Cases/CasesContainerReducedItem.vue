@@ -7,13 +7,13 @@
           </b-row>
         </div>
         <b-list-group class="list-group-flush">
-          <b-list-group-item>
+          <b-list-group-item >
             <span>Title:</span>
             {{caseData.title}}
           </b-list-group-item>
           <b-list-group-item>
             <span>Date:</span>
-            {{caseData.date}}
+            {{caseData.date ? caseData.date.split('T')[0] : caseData.date}}
           </b-list-group-item>
           <b-list-group-item>
             <span>First name:</span>
@@ -30,7 +30,7 @@
         </b-list-group>
         <b-card-footer>
           <b-button-group>
-              <router-link :to="{name: 'caseElement', params: {caseData: caseData}}">
+              <router-link :to="{name: 'caseElement', params: {caseId: caseData._id, caseData: caseData } }">
             <b-button variant="primary">Show</b-button>
             </router-link>
           </b-button-group>
@@ -40,16 +40,18 @@
 </template>
 
 <script>
+
+import {mapActions, mapGetters} from 'vuex'
+import CasesContainerFullItem from './CasesContainerFullItem'
+
 export default {
-    name: "CasesContainerReducedItem",
+    name: "CasesContainerFullItem",
+    components: {
+      CasesContainerFullItem
+    },
     props: {
         caseData: {
           type: Object
-        }
-    },
-    methods: {
-        showCase() {
-            console.log(this.caseData)
         }
     }
 }

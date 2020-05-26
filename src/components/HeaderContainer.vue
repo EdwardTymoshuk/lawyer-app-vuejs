@@ -1,12 +1,10 @@
 <template>
   <b-navbar expand="lg" fixed="top" class="header-container">
       <b-navbar-brand class="header-container-brand" >LAWYER REACT APP</b-navbar-brand>
-      <b-link class="header-container-cases"><b-button><b-link to="/">Cases</b-link></b-button></b-link>
+      <b-link class="header-container-cases"><b-button><router-link to="/cases">Cases</router-link></b-button></b-link>
       <b-form inline class="header-container-search">
             <b-form-input type="text"
               placeholder="Search..."
-              @change="handleChange"
-              :value="searchingElement"
               >
             </b-form-input>
         <b-button class="header-container-search-btn">Search</b-button>

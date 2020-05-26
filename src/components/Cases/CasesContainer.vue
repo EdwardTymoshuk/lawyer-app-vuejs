@@ -20,17 +20,19 @@
 
 import ThePageHeading from '../ThePageHeading'
 import CasesContainerReducedItem from './CasesContainerReducedItem'
+import CaseContainerFullItem from './CasesContainerFullItem'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "CasesContainer",
   components: {
         ThePageHeading,
-        CasesContainerReducedItem
+        CasesContainerReducedItem,
+        CaseContainerFullItem
       },
   data() {
     return {
-      
+      cases: this.CASES
     }
   },
   computed: {
@@ -46,8 +48,8 @@ export default {
     mounted() {
       this.GET_CASES()
     },
-    showCase() {
-      this.$emit('showCase', this.caseData)
+    updated() {
+      this.cases !== this.CASES && this.GET_CASES()
     }
 }
 </script>
