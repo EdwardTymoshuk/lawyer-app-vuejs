@@ -12,7 +12,8 @@ Vue.use(Vuex)
 let store = new Vuex.Store({
     state: {
         cases: [],
-        caseElement: {}
+        caseElement: {},
+        isDeleted: false
     },
     mutations,
     actions,

@@ -1,5 +1,6 @@
 <template>
   <div class="case-element" >
+       {{this.$store.state.isDeleted ? $router.push({name: 'cases'}) : ''}}
       <the-page-heading>
         <span>CASE №</span> {{CASE_ELEMENT && CASE_ELEMENT._id}}
       </the-page-heading>
@@ -60,7 +61,6 @@
                 </b-list-group-item>
                 <b-input-group v-else prepend="Description:">
                   <b-form-input type="text" :value="CASE_ELEMENT.description" @change="(description) => setDescription(description)"/>
-                  <span>{{caseElement}}</span>
                 </b-input-group>
             </b-list-group-item>
           </b-list-group>
@@ -69,13 +69,12 @@
           <b-button-group>
               <b-button class="case-element-btn-edit" v-if="!isEditMode" @click="setEditMode">Edit</b-button>
               <b-button class="case-element-btn-save" v-else @click="updateCaseElement">Save</b-button>
-            <b-button class="case-element-btn-delete" variant="danger">Delete</b-button>
+            <b-button class="case-element-btn-delete" variant="danger" @click="deleteCase">Delete</b-button>
           </b-button-group>
         </b-card-footer>
       </b-card>
     </div>
 </template>
-
 <script>
 
 import ThePageHeading from '../ThePageHeading'
@@ -88,7 +87,8 @@ export default {
       },
     data() {
         return {
-                isEditMode: false
+            isEditMode: false,
+            // isDeleted: false
         }
     },
     computed: {
@@ -97,9 +97,17 @@ export default {
         ])
     },
     methods: {
+        deleteCase() {
+            this.setDeleted()
+            this.DELETE_CASE(this.$route.params.caseId)
+        },
+        setDeleted() {
+            return this.$store.commit('SET_DELETED')
+        },
         ...mapActions([
             'GET_CASE_ELEMENT',
-            'UPDATE_CASE_ELEMENT'
+            'UPDATE_CASE_ELEMENT',
+            'DELETE_CASE'
         ]),
         setEditMode() {
             return this.isEditMode = !this.isEditMode
@@ -134,6 +142,7 @@ export default {
     },
     updated() {
         this.caseElement = this.CASE_ELEMENT
+        this.caseElement.isDeleted = false
     },
       watch: {
     '$route.params': {
@@ -142,8 +151,7 @@ export default {
             this.GET_CASE_ELEMENT(caseId)
         },
         immediate: true
-    },
-
+    }
 }
 }
 </script>

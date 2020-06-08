@@ -4,5 +4,8 @@ export default {
     },
     SET_CASE_ELEMENT: (state, caseElement) => {
         state.caseElement = caseElement
+    },
+    SET_DELETED: (state) => {
+        state.isDeleted = !state.isDeleted
     }
 }

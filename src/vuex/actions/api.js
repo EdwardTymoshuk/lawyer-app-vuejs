@@ -27,5 +27,20 @@ export default  {
         instance.post('/cases/' + caseId, {title, date, adress, firstName, secondName, dob, description})
             commit('SET_CASE_ELEMENT', caseElement)
             return caseElement
+    },
+    async DELETE_CASE ({commit}, caseId) {
+        let response = await instance.delete('/cases/' + caseId)
+        try {
+             if (response.status === 200) {
+                commit('SET_DELETED')
+                alert(`Your case ${caseId} was succesfully deleted`)
+             }    
+            
+        } catch(err) {
+            return err
+        }
+},
+async ADD_CASE ({}, caseElement) {
+    await instance.post('/cases', caseElement)
     }
 }

@@ -2,8 +2,8 @@
   <div class="cases-container">
     <the-page-heading>ALL CASES</the-page-heading>
     <div>
-      <b-button v-b-modal.modal-1 class="cases-container-button" variant="light" @click="() => setCaseAdd(true)">
-        <b-icon icon="plus" font-scale="5" />
+      <b-button v-b-modal.add-case-modal class="cases-container-button" variant="dark" @click="() => this.isModal = true">
+        <b-icon class="cases-container-button-icon"  icon="plus" font-scale="5" />
       </b-button>
     </div>
     <div class="cases-container-body">
@@ -12,6 +12,7 @@
         :key="item._id" 
         :caseData="item"
       />
+      <cases-container-add-case />
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@
 import ThePageHeading from '../ThePageHeading'
 import CasesContainerReducedItem from './CasesContainerReducedItem'
 import CaseContainerFullItem from './CasesContainerFullItem'
+import CasesContainerAddCase from './CasesContainerAddCase'
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -28,11 +30,13 @@ export default {
   components: {
         ThePageHeading,
         CasesContainerReducedItem,
-        CaseContainerFullItem
+        CaseContainerFullItem,
+        CasesContainerAddCase
       },
   data() {
     return {
-      cases: this.CASES
+      cases: this.CASES,
+      isModal: false
     }
   },
   computed: {
@@ -69,7 +73,9 @@ export default {
   color: #2e1114;
   transition: ease-in-out 0.4s;
 }
-.cases-container-button:hover {
+.cases-container-button:hover,
+.cases-container-button:active,
+.cases-container-button:focus {
   background: transparent !important;
   transform: rotate(180deg);
   color: #3b945e;

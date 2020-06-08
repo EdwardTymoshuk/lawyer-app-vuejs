@@ -30,7 +30,7 @@
         </b-list-group>
         <b-card-footer>
           <b-button-group>
-              <router-link :to="{name: 'caseElement', params: {caseId: caseData._id, caseData: caseData } }">
+              <router-link :to="{name: 'caseElement', params: {caseId: caseData._id, caseData: caseData, isDeleted: isDeleted } }">
             <b-button variant="primary">Show</b-button>
             </router-link>
           </b-button-group>
@@ -53,6 +53,11 @@ export default {
         caseData: {
           type: Object
         }
+    },
+    data() {
+      return {
+        isDeleted: false
+    }
     }
 }
 </script>
