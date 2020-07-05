@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import mutations from './mutations/mutations'
 import getters from './getters/getters'
-import commonActions from './actions/actions'
+import commonActions from './actions/commonActions'
 import api from './actions/api'
 
 const actions = {...commonActions, ...api}
@@ -13,7 +13,13 @@ let store = new Vuex.Store({
     state: {
         cases: [],
         caseElement: {},
-        isDeleted: false
+        isDeleted: false,
+        authMe: {
+            isAuth: false,
+            name: '',
+            email: ''
+        },
+        isRegisterValidate: false
     },
     mutations,
     actions,

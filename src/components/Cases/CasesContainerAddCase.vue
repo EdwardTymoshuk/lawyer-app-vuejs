@@ -6,7 +6,7 @@
     @hidden="resetModal"
     hide-footer
   >
-    <b-form @submit.prevent="addCase">
+    <b-form @submit.prevent="addCase" @keyup.enter="addCase">
       <b-form-group id="title" label="Title:" label-for="title">
         <b-form-input
           id="title"
@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { required } from "vuelidate/lib/validators";
+import { mapActions } from "vuex"
+import { required } from "vuelidate/lib/validators"
 
 export default {
   data() {
@@ -100,13 +100,13 @@ export default {
     ...mapActions(["ADD_CASE"]),
     addCase() {
       this.$v.caseElement.$touch();
-      if (this.$v.caseElement.$error) return;
+      if (!this.$v.caseElement.$error) {
       this.ADD_CASE(this.caseElement);
       this.$bvModal.hide("add-case-modal");
+      }
     },
     resetModal() {
-      return {
-        caseElement: {
+        this.caseElement = {
           title: "",
           date: "",
           adress: "",
@@ -115,7 +115,7 @@ export default {
           dob: "",
           description: ""
         }
-      };
+        this.$v.caseElement.$reset();
     }
   }
 };
