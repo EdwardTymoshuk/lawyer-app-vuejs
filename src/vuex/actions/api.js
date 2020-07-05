@@ -8,11 +8,24 @@ const instance = axios.create({
 })
 
 export default  {
-    GET_CASES({commit}) {
-        return instance.get('/cases').then(response => {
-            let cases = response.data
-            commit('SET_CASES', cases)
-            return cases
+    async GET_CASES({commit}) { 
+        let cases = await instance.get('/cases').then(response => {
+            return response.data         
         })
+        commit('SET_CASES', cases)
+        return cases
+    },
+    async GET_CASE_ELEMENT({commit}, caseId) {
+        let caseElement = await instance.get('/cases/' + caseId).then(response => {
+            return response.data
+        })
+        commit('SET_CASE_ELEMENT', caseElement)
+            return caseElement
+    },
+    UPDATE_CASE_ELEMENT ({commit}, {caseId, caseElement}) {
+        const {title, date, adress, firstName, secondName, dob, description} = caseElement
+        instance.post('/cases/' + caseId, {title, date, adress, firstName, secondName, dob, description})
+            commit('SET_CASE_ELEMENT', caseElement)
+            return caseElement
     }
 }
