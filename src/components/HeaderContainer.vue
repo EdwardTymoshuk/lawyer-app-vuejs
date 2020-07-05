@@ -1,23 +1,55 @@
 <template>
   <b-navbar expand="lg" fixed="top" class="header-container">
-      <b-navbar-brand class="header-container-brand" >LAWYER REACT APP</b-navbar-brand>
+      <b-navbar-brand class="header-container-brand">LAWYER REACT APP</b-navbar-brand>
       <b-link class="header-container-cases"><b-button><router-link to="/cases">Cases</router-link></b-button></b-link>
       <b-form inline class="header-container-search">
-            <b-form-input type="text"
+            <b-form-input type="text" v-model="searchingElement"
               placeholder="Search..."
               >
             </b-form-input>
-        <b-button class="header-container-search-btn">Search</b-button>
+        <b-button class="header-container-search-btn" v-if="searchingElement" @click="() => searchingElement = ''">Reset</b-button>
       </b-form>
-      <b-link class="header-container-login">
-        <b-button class="header-container-login-btn">Login</b-button>
+      <div class="header-container-login">
+       <span class="header-container-login-greating" v-if="IS_AUTH.isAuth">Nice to see you, {{this.IS_AUTH.name}}</span>
+      <b-link>
+        <b-button v-if="!IS_AUTH.isAuth" class="header-container-login-btn"><router-link to="/login">Login</router-link></b-button>
+        <b-button v-else class="header-container-logout-btn" @click="logOut()">Logout</b-button>
       </b-link>
+      </div>
     </b-navbar>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
+    data() {
+        return {
+            searchingElement: ''
+        }
+    },
+     computed: {
+    ...mapGetters([
+      'CASES',
+      'IS_AUTH'
+    ])
+  },
+    methods: {
+        ...mapActions([
+        'GET_CASES',
+        'SEARCH_CASE',
+        'LOGOUT'
+      ]),
+        logOut() {
+            this.LOGOUT().then(() => {
+                this.$router.push({name: 'login'}).catch(err => {})
+            })
 
+
+    }
+    },
+    beforeUpdate() {
+        this.searchingElement ? this.SEARCH_CASE(this.searchingElement) : this.GET_CASES()
+    }
 }
 </script>
 
