@@ -2,13 +2,13 @@
   <div class="cases-container">
     <the-page-heading>ALL CASES</the-page-heading>
     <div>
-      <b-button v-b-modal.add-case-modal class="cases-container-button" variant="dark" @click="() => this.isModal = true">
+      <b-button v-b-modal.add-case-modal class="cases-container-button" variant="dark" >
         <b-icon class="cases-container-button-icon"  icon="plus" font-scale="5" />
       </b-button>
     </div>
     <div class="cases-container-body">
-      <cases-container-reduced-item 
-        v-for="item in CASES" 
+      <cases-container-reduced-item
+        v-for="item in CASES"
         :key="item._id" 
         :caseData="item"
       />
@@ -35,7 +35,7 @@ export default {
       },
   data() {
     return {
-      cases: this.CASES,
+      cases: [],
       isModal: false
     }
   },
@@ -46,14 +46,14 @@ export default {
   },
   methods: {
       ...mapActions([
-        'GET_CASES'
+        'GET_CASES',
       ])
     },
     mounted() {
-      this.GET_CASES()
-    },
-    updated() {
-      this.cases !== this.CASES && this.GET_CASES()
+     this.GET_CASES().then(response => {
+       this.cases = response
+     }
+     )
     }
 }
 </script>

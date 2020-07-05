@@ -1,6 +1,6 @@
 <template>
   <div class="case-element" >
-       {{this.$store.state.isDeleted ? $router.push({name: 'cases'}) : ''}}
+       {{this.$store.state.isDeleted ? $router.push({name: 'cases'}).catch(err => {}) : ''}}
       <the-page-heading>
         <span>CASE №</span> {{CASE_ELEMENT && CASE_ELEMENT._id}}
       </the-page-heading>
@@ -36,7 +36,7 @@
                   <span>First Name:</span> {{CASE_ELEMENT ? CASE_ELEMENT.firstName : ''}}
                 </b-list-group-item>
                 <b-input-group v-else prepend="First Name:">
-                  <b-form-input required type="text" :value="CASE_ELEMENT.firstName" @change="(firstName) => setFirstName(firstName)"/>
+                  <b-form-input required type="text" :value="CASE_ELEMENT.firstName" @change="(firstName) => setFirstName(firstName)" :class="{ 'hasError': $v.caseElement.firstName.$error }"/>
                 </b-input-group>
             </b-list-group-item>
             <b-list-group-item as="div">
@@ -44,7 +44,7 @@
                   <span>Second Name:</span> {{CASE_ELEMENT ? CASE_ELEMENT.secondName : ''}}
                 </b-list-group-item>
                 <b-input-group v-else prepend="Second Name:">
-                  <b-form-input required type="text" :value="CASE_ELEMENT.secondName" @change="(secondName) => setSecondName(secondName)"/>
+                  <b-form-input required type="text" :value="CASE_ELEMENT.secondName" @change="(secondName) => setSecondName(secondName)" :class="{ 'hasError': $v.caseElement.secondName.$error }"/>
                 </b-input-group>
             </b-list-group-item>
             <b-list-group-item as="div">
@@ -79,6 +79,7 @@
 
 import ThePageHeading from '../ThePageHeading'
 import { mapGetters, mapActions } from 'vuex'
+import { required } from "vuelidate/lib/validators"
 
 export default {
     name: "CasesContainerFullItem",
@@ -91,6 +92,12 @@ export default {
             // isDeleted: false
         }
     },
+    validations: {
+    caseElement: {
+      firstName: { required },
+      secondName: { required }
+    }
+  },
     computed: {
         ...mapGetters([
             'CASE_ELEMENT'
@@ -107,16 +114,19 @@ export default {
         ...mapActions([
             'GET_CASE_ELEMENT',
             'UPDATE_CASE_ELEMENT',
-            'DELETE_CASE'
+            'DELETE_CASE',
+            'GET_CASES'
         ]),
         setEditMode() {
             return this.isEditMode = !this.isEditMode
         },
         updateCaseElement() {
+          this.$v.caseElement.$touch()
+      if (!this.$v.caseElement.$error) {
             let caseElementData = {caseId: this.$route.params.caseId, caseElement: this.caseElement}
             this.UPDATE_CASE_ELEMENT(caseElementData)
             this.setEditMode()
-
+      }
         },
         setTitle(title) {
             this.caseElement.title = title
@@ -142,7 +152,7 @@ export default {
     },
     updated() {
         this.caseElement = this.CASE_ELEMENT
-        this.caseElement.isDeleted = false
+        this.GET_CASES()
     },
       watch: {
     '$route.params': {
@@ -190,5 +200,8 @@ export default {
     background-color: #f76c6c !important;
     color: #2E1114 !important;
     box-shadow: none;
+}
+.hasError {
+  border: 1px solid red;
 }
 </style>

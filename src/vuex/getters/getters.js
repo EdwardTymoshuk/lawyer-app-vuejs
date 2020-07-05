@@ -4,5 +4,9 @@ export default {
     },
     CASE_ELEMENT(state) {
         return state.caseElement
-    }
+    },
+    IS_AUTH(state) {
+        return state.authMe
+    },
+
 }
